@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat v2.0</title>
+    <link rel="stylesheet" href="frontend/css/main.css" />
+  </head>
+  <body>
+    <!-- Botón para toggle del menú lateral -->
+    <button id="sidebar-toggle" class="sidebar-toggle">
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M3 18H21V16H3V18ZM3 13H21V11H3V13ZM3 6V8H21V6H3Z"
+          fill="currentColor"
+        />
+      </svg>
+    </button>
+
+    <!-- Botón para modo oscuro -->
+    <button id="dark-mode-toggle" class="dark-mode-toggle">
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M12 2V4"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M12 20V22"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M4.93 4.93L6.34 6.34"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M17.66 17.66L19.07 19.07"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M2 12H4"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M20 12H22"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M6.34 17.66L4.93 19.07"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M19.07 4.93L17.66 6.34"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </button>
+
+    <!-- Menú lateral de documentos -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h2>Documentos</h2>
+        <button id="close-sidebar" class="close-sidebar">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z"
+              fill="currentColor"
+            />
+          </svg>
+        </button>
+      </div>
+      <div class="sidebar-content">
+        <div class="upload-section">
+          <input
+            type="file"
+            id="file-input"
+            accept=".pdf,.txt,.docx"
+            multiple
+            style="display: none"
+          />
+          <button id="upload-button" class="upload-btn">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M11 15H13V9H16L12 4L8 9H11V15Z" fill="currentColor" />
+              <path
+                d="M20 18H4V11H2V18C2 19.103 2.897 20 4 20H20C21.103 20 22 19.103 22 18V11H20V18Z"
+                fill="currentColor"
+              />
+            </svg>
+            Subir documentos
+          </button>
+          <div id="upload-status" class="upload-status"></div>
+        </div>
+
+        <div class="documents-list" id="documents-list">
+          <p class="no-documents">No hay documentos subidos</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Overlay para cerrar el menú al hacer clic fuera -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <div class="chat-container">
+      <div class="chat-header">
+        <div>Chat v2.0</div>
+        <div class="server-config">
+          <span id="server-status"></span>
+          <span id="server-ip">Servidor Local</span>
+          <button id="reconnect-button" class="reconnect-button">
+            Reconectar
+          </button>
+        </div>
+      </div>
+
+      <div class="chat-messages" id="chat-messages">
+        <div class="message bot-message">
+          ¡Hola! Estoy intentando conectar con el servidor FastAPI...
+          <div class="timestamp">Conectando</div>
+        </div>
+      </div>
+
+      <div class="typing-indicator" id="typing-indicator">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div class="chat-input">
+        <input
+          type="text"
+          id="user-input"
+          placeholder="Escribe tu mensaje aquí..."
+        />
+        <button id="send-button">Enviar</button>
+      </div>
+    </div>
+
+    <script src="frontend/js/main.js"></script>
+  </body>
+</html>
